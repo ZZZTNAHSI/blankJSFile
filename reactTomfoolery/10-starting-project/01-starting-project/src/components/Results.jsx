@@ -1,6 +1,6 @@
 import { calculateInvestmentResults, formatter } from '../util/investment.js';
 
-// man this shit was so useles.
+// man this shit was so useles.f
 export default function Results({ input }) {
   calculateInvestmentResults(input, results);
   const results = [];
