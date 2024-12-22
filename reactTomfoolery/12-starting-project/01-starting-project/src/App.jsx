@@ -1,15 +1,24 @@
+import NewProj from "./components/NewProj";
+import Button from "./components/Button";
+import NoProj from "./components/NoProj";
+import TodoList from "./components/TodoList";
+
+
 function App() {
   return (
     <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
-      <div className="flex flex-row w-screen">
+      
+      <div className="flex flex-row w-screen mt-16">
         <div className="flex flex-col flex-wrap pl-12 bg-black w-[35%] s-12 h-screen rounded-tr-3xl rounded-br-3xl min-w-[300px] max-w-[450px]">
           <p className="text-white text-2xl font-semibold mt-[70px]">YOUR PROJECTS</p>
-          <button className="bg-stone-800 mb-8 text-stone-400 max-w-40 rounded-[5px] min-h-[40px] text-lg mt-10">+ Add Project</button>
+          <Button title="+ Add Project" size="500" />
           <div className="flex flex-col ">
-
+              <button className="text-stone-400 bg-black rounded-[5px] min-h-[30px] p-2 text-md max-w-[100%] mr-12 text-left mb-1 hover:bg-stone-800">TEMP NAME</button>
           </div>
         </div>
+        <TodoList />
+        {/* <NoProj /> */}
+        {/* <NewProj /> */}
       </div>
     </>
   );
