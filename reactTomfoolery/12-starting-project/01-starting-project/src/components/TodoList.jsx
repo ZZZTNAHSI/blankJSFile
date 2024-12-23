@@ -2,14 +2,10 @@ import Task from "./Task"
 import { useRef, useState } from "react"
 
 
-export default function TodoList({ table, addTask, index,  }) {
-    const {title, desc, dueDate, tasks,} = table;
-    const [newTask, setNewTask] = useState("");
-    console.log(tasks);
-
-    function taskChange(e) {        
-        setNewTask(e);
-      }
+export default function TodoList({id, title, desc, dueDate, tasks, addTask, index}) {
+    const taskInput = useRef();
+    console.log("Top level tasks: " + typeof(tasks));
+    console.log([1, 2, 3, 4, 5]);
 
 
     return <div className="flex flex-col mt-20 ml-10 w-[40%] ">
@@ -21,14 +17,16 @@ export default function TodoList({ table, addTask, index,  }) {
         <p className="mb-4 leading-loose border-b-2 pb-4 border-stone-300">{desc}</p>
         <p className="mt-1 text-3xl font-bold">Tasks</p>
         <div className="flex flex-row items-center">
-            <input onChange={(e) => {const dick = e.target.value; taskChange(dick)}} value={newTask} className="mt-5 bg-stone-200 rounded-[3px] h-9 p-2 caret-stone-500 min-w-[250px] focus:ring-2 focus:ring-blue-500 focus:outline-none"></input>
+            <input ref={taskInput}  className="mt-5 bg-stone-200 rounded-[3px] h-9 p-2 caret-stone-500 min-w-[250px] focus:ring-2 focus:ring-blue-500 focus:outline-none"></input>
             <button onClick={() => {
-                addTask(newTask);
+                const task = taskInput.current.value;    
+                addTask(task, index);
                 }} className="rounded-lg p-2 ml-2 text-stone-600 h-9 mt-5 w-fit">Add Task</button>
         </div>
         <div className="mt-7 bg-stone-200 p-7 divide-y-[20px]  divide-stone-200 rounded-sm ">
-            {(tasks.length > 0 ) && tasks.map((task, index) => {console.log("task: " + task); return <Task text={task} key={index} indexRow={index} />})}
-
+                {tasks.map((task) => {
+                    <Task text={task} />
+                })}
 
         </div>
     </div>

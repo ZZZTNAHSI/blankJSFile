@@ -8,49 +8,67 @@ import {useState, useRef } from "react";
 
 function App() {
   const [masterTable, setMasterTable] = useState([]);
-  const [onList, setOnList] = useState(false);
-  const [onPage, setOnPage]  = useState(false);
-  const [whichIndex, setWhichIndex] = useState();
-  
+  const [pageIndex, setPageIndex] = useState({
+    index: undefined, 
+    page: false,
+    proj: false,
 
+  });
 
-
-  function handleSubmit2(title1, desc1, dueDate1) {
+  function handleNewProj(title, desc, dueDate) {
     setMasterTable((prev) => {
+      const id = Math.random();
+      console.log(...prev);     
       return [...prev, {
-        title: title1,
-        desc: desc1,
-        dueDate: dueDate1,
+        id: id,
+        title: title,
+        desc: desc,
+        dueDate: dueDate,
         tasks: []
       }];
     });
   }
-
   function handlePage() {
-    setOnPage(true);
-    setOnList(false);
-  }
-  function handleOnList() {
-    setOnList(true);
-    setOnPage(false);
-  }
-  function handleIndex(index) {
-    setWhichIndex(index);
-  }
-  function handleAddTask(task1) {
-
-    setMasterTable((prev) => { 
-      const tasks = masterTable[whichIndex].tasks;
-      console.log("setMasterTable in process///");
-      const zaTasks = [...tasks, task1];
-      console.log(zaTasks);
-      let prevTable = prev;
-      prevTable[whichIndex].tasks = zaTasks;
-      console.log(prevTable);
-      return prevTable;
+    setPageIndex((prev) => {
+      return {
+        ...prev,
+        page: true,
+        proj: false,
+      }
     });
-    console.log("This is master table after reender: " + masterTable);
-    setOnPage(() => false);
+  }
+  // function handleOnList() {
+  //   setPageIndex((prev) => {
+  //     return {...prev,
+  //       proj: true,
+  //       page: false,
+  //     }
+  //   });
+  // }
+  function handleIndex(id) {
+    const theIndex = masterTable.findIndex((proj) => proj.id === id);
+    // console.log("theIndex: " + theIndex);
+    setPageIndex(() => { 
+      return {
+        index: theIndex,
+        proj: true,
+        page: false,
+      }
+    });
+  }
+
+  function handleAddTask(task, index) {
+    setMasterTable((prev) => {
+      console.log("the task: " + task);
+      console.log("the index: " + index);
+      let prevRows = prev[index].tasks;
+      const newRows = [...prevRows, task];
+      console.log("new Tasks: " + newRows);
+      let prevTable = prev;
+      prevTable[index].tasks = newRows;    
+      console.log("This is new prevTable: " + prevTable[index]);
+      return prevTable;
+    })
   }
 
   return (
@@ -61,13 +79,13 @@ function App() {
           <p className="text-white text-2xl font-semibold mt-[70px]">YOUR PROJECTS</p>
           <Button title="+ Add Project" newPage={handlePage} />
           <div className="flex flex-col ">
-            {masterTable.map((obj, index) => <ColumnButton key={index} title={obj.title} onList={handleOnList} onC={handleIndex} zaNum={index}/>)}
+            {masterTable.map((obj, index) => <ColumnButton key={index} id={obj.id} title={obj.title} onC={handleIndex}/>)}
           </div>
         </div>
         
-        { (!onList && !onPage) &&  <NoProj newPage={handlePage} />}
-        {onPage && <NewProj handleSubmit2={handleSubmit2} /> }
-        {onList && <TodoList table={masterTable[whichIndex]} index={whichIndex} addTask={handleAddTask}/> }
+        { (!pageIndex.page && !pageIndex.proj) &&  <NoProj newPage={handlePage} />}
+        {pageIndex.page  && <NewProj handleSubmit2={handleNewProj} /> }
+        {pageIndex.proj && <TodoList {...masterTable[pageIndex.index]} index={pageIndex.index} addTask={handleAddTask}/> }
       </div>
     </>
   );
