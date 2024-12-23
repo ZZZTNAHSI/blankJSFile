@@ -2,46 +2,71 @@ import NewProj from "./components/NewProj";
 import Button from "./components/Button";
 import NoProj from "./components/NoProj";
 import TodoList from "./components/TodoList";
+import ColumnButton from "./components/ColumnButton";
 import {useState, useRef } from "react";
 
 
 function App() {
   const [masterTable, setMasterTable] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
+  const [onList, setOnList] = useState(false);
+  const [onPage, setOnPage]  =useState(false);
+  const [whichIndex, setWhichIndex] = useState();
+  const [newTask, setNewTask] = useState("");
 
-  const info = useRef();
-
-  function handleSubmit() {
-    setSubmitted(true);
+  function handleSetNewTask(e) {        
+    setNewTask(e);
   }
 
-  function handleSubmit2(title, desc, dueDate) {
+  function handleSubmit2(title1, desc1, dueDate1) {
     setMasterTable((prev) => {
       return [...prev, {
-        title: title.current.value,
-        desc: desc.current.value,
-        dueDate: dueDate.current.value,
+        title: title1,
+        desc: desc1,
+        dueDate: dueDate1,
         tasks: []
       }];
     });
-    console.log("This is master: " + masterTable);
-    setSubmitted((prev) => !prev);
+  }
+
+  function handlePage() {
+    setOnPage(true);
+    setOnList(false);
+  }
+  function handleOnList() {
+    setOnList(true);
+    setOnPage(false);
+  }
+  function handleIndex(index) {
+    setWhichIndex(index);
+  }
+  function handleAddTask(index1, task1) {
+
+    setMasterTable((prev) => { 
+      const tasks = masterTable[index1].tasks;
+      console.log("setMasterTable in process///");
+      const zaTasks = [...tasks, task1];
+      let prevTable = prev;
+      prevTable[index1].tasks = zaTasks;
+      return prevTable;
+    });
+    console.log("This is master table after reender: " + masterTable);
   }
 
   return (
     <>
       
       <div className="flex flex-row w-screen mt-16">
-        <div className="flex flex-col flex-wrap pl-12 bg-black w-[35%] s-12 h-screen rounded-tr-3xl rounded-br-3xl min-w-[300px] max-w-[450px]">
+        <div className="flex flex-col flex-wrap pl-12 bg-black w-[35%] s-12 h-screen rounded-tr-3xl rounded-br-3xl min-w-[300px] max-w-[400px]">
           <p className="text-white text-2xl font-semibold mt-[70px]">YOUR PROJECTS</p>
-          <Button title="+ Add Project" />
+          <Button title="+ Add Project" newPage={handlePage} />
           <div className="flex flex-col ">
-              <button className="text-stone-400 bg-black rounded-[5px] min-h-[30px] p-2 text-md max-w-[100%] mr-12 text-left mb-1 hover:bg-stone-800">TEMP NAME</button>
+            {masterTable.map((obj, index) => <ColumnButton key={index} title={obj.title} onList={handleOnList} onC={handleIndex} zaNum={index}/>)}
           </div>
         </div>
-        {/* <TodoList /> */}
-        {/* <NoProj /> */}
-        <NewProj handleSubmit={handleSubmit} handleSubmit2={handleSubmit2} ref={info}/>
+        
+        { (!onList && !onPage) &&  <NoProj newPage={handlePage} />}
+        {onPage && <NewProj handleSubmit2={handleSubmit2} /> }
+        {onList && <TodoList table={masterTable[whichIndex]} index={whichIndex} addTask={handleAddTask} taskChange={handleSetNewTask} currentTask={newTask}/> }
       </div>
     </>
   );

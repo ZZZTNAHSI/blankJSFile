@@ -1,26 +1,21 @@
 import { forwardRef, useRef, useImperativeHandle} from "react";
 
-const NewProj = forwardRef(function NewProj({handleSubmit, handleSubmit2}, ref) {
+export default function NewProj({handleSubmit2}) {
     const title = useRef();
     const desc = useRef();
     const dueDate = useRef();
-
-    useImperativeHandle(ref, () => {return {
-        getTitle: () => {return title.current.value},
-        getDesc: () => {return desc.current.value},
-        getDueDate: () => {return dueDate.current.value}
-    }});
     
 
     
     return <form className="flex flex-col justify-items-center basis-full ml-10 mr-[20%] mt-20 w-[40%]" onSubmit={(e) => {
-        handleSubmit();
-        handleSubmit2(title, desc,dueDate);
-        e.preventDefault();
+        const title1 = title.current.value;
+        const desc1 = desc.current.value;
+        const dueDate1 = dueDate.current.value;
+        handleSubmit2(title1, desc1,dueDate1);
         title.current.value = "";
         desc.current.value = "";
         dueDate.current.value = "";
-
+        e.preventDefault();
         }}>
         <div className="flex flex-row-reverse ">
             <button type="submit" className="rounded-lg text-white bg-black  ml-5 min-w-[90px] min-h-10 ">Save</button>
@@ -34,6 +29,5 @@ const NewProj = forwardRef(function NewProj({handleSubmit, handleSubmit2}, ref) 
         <textarea ref={dueDate} placeholder="DD.MM.YYYY" className={"resize-none bg-stone-200 rounded-sm outline-none outline p-1 focus:border-b-black border-b-stone-400 border-2 h-16"}></textarea>
 
     </form>
-});
+};
 
-export default NewProj;
