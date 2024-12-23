@@ -9,13 +9,11 @@ import {useState, useRef } from "react";
 function App() {
   const [masterTable, setMasterTable] = useState([]);
   const [onList, setOnList] = useState(false);
-  const [onPage, setOnPage]  =useState(false);
+  const [onPage, setOnPage]  = useState(false);
   const [whichIndex, setWhichIndex] = useState();
-  const [newTask, setNewTask] = useState("");
+  
 
-  function handleSetNewTask(e) {        
-    setNewTask(e);
-  }
+
 
   function handleSubmit2(title1, desc1, dueDate1) {
     setMasterTable((prev) => {
@@ -39,17 +37,20 @@ function App() {
   function handleIndex(index) {
     setWhichIndex(index);
   }
-  function handleAddTask(index1, task1) {
+  function handleAddTask(task1) {
 
     setMasterTable((prev) => { 
-      const tasks = masterTable[index1].tasks;
+      const tasks = masterTable[whichIndex].tasks;
       console.log("setMasterTable in process///");
       const zaTasks = [...tasks, task1];
+      console.log(zaTasks);
       let prevTable = prev;
-      prevTable[index1].tasks = zaTasks;
+      prevTable[whichIndex].tasks = zaTasks;
+      console.log(prevTable);
       return prevTable;
     });
     console.log("This is master table after reender: " + masterTable);
+    setOnPage(() => false);
   }
 
   return (
@@ -66,7 +67,7 @@ function App() {
         
         { (!onList && !onPage) &&  <NoProj newPage={handlePage} />}
         {onPage && <NewProj handleSubmit2={handleSubmit2} /> }
-        {onList && <TodoList table={masterTable[whichIndex]} index={whichIndex} addTask={handleAddTask} taskChange={handleSetNewTask} currentTask={newTask}/> }
+        {onList && <TodoList table={masterTable[whichIndex]} index={whichIndex} addTask={handleAddTask}/> }
       </div>
     </>
   );
