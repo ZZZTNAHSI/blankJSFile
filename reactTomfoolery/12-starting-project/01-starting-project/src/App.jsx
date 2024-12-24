@@ -12,7 +12,6 @@ function App() {
     index: undefined, 
     page: false,
     proj: false,
-
   });
 
   function handleNewProj(title, desc, dueDate) {
@@ -37,14 +36,17 @@ function App() {
       }
     });
   }
-  // function handleOnList() {
-  //   setPageIndex((prev) => {
-  //     return {...prev,
-  //       proj: true,
-  //       page: false,
-  //     }
-  //   });
-  // }
+  function handleNoProj() {
+    setPageIndex((prev) => {
+      return {
+        index: undefined,
+        page: false,
+        proj: false,
+      }
+    });
+  }
+
+
   function handleIndex(id) {
     const theIndex = masterTable.findIndex((proj) => proj.id === id);
     // console.log("theIndex: " + theIndex);
@@ -59,15 +61,24 @@ function App() {
 
   function handleAddTask(task, index) {
     setMasterTable((prev) => {
-      console.log("the task: " + task);
-      console.log("the index: " + index);
-      let prevRows = prev[index].tasks;
+      const prevRows = prev[index].tasks;
       const newRows = [...prevRows, task];
-      console.log("new Tasks: " + newRows);
-      let prevTable = prev;
-      prevTable[index].tasks = newRows;    
-      console.log("This is new prevTable: " + prevTable[index]);
-      return prevTable;
+      return prev.with(index, {...prev[index], tasks: newRows});
+    }); 
+  }
+
+  function handleRemoveTask(indexProj, indexTask) {
+    setMasterTable((prev) => {
+      let newArray = prev[indexProj].tasks;
+      newArray = newArray.filter((item, index) => !(index === indexTask));
+       return prev.with(indexProj, {...prev[indexProj], tasks: newArray});
+    });
+  }
+
+  function handleRemoveProj(indexProj) {
+    setMasterTable((prev) => {
+      const newProj = prev.filter((item, index) => !(indexProj === index));
+      return newProj;
     })
   }
 
@@ -85,7 +96,7 @@ function App() {
         
         { (!pageIndex.page && !pageIndex.proj) &&  <NoProj newPage={handlePage} />}
         {pageIndex.page  && <NewProj handleSubmit2={handleNewProj} /> }
-        {pageIndex.proj && <TodoList {...masterTable[pageIndex.index]} index={pageIndex.index} addTask={handleAddTask}/> }
+        {pageIndex.proj && <TodoList {...masterTable[pageIndex.index]} index={pageIndex.index} addTask={handleAddTask} removeTask={handleRemoveTask} rProj={handleRemoveProj} noProj={handleNoProj}/> }
       </div>
     </>
   );
