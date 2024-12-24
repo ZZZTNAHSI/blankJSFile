@@ -26,7 +26,7 @@ export default function NewProj({handleSubmit2}) {
         <label className="text-stone-500 min-h-[20px] font-bold min-w-full mt-4">Description</label>
         <textarea ref={desc} className={"resize-none bg-stone-200 rounded-sm outline-none outline p-1 focus:border-b-black border-b-stone-400 border-2 h-24"}></textarea>
         <label className="text-stone-500 min-h-[20px] font-bold min-w-full mt-4">Due Date</label>
-        <textarea ref={dueDate} placeholder="DD.MM.YYYY" className={"resize-none bg-stone-200 rounded-sm outline-none outline p-1 focus:border-b-black border-b-stone-400 border-2 h-16"}></textarea>
+        <textarea type="date" ref={dueDate} placeholder="DD.MM.YYYY" className={"resize-none bg-stone-200 rounded-sm outline-none outline p-1 focus:border-b-black border-b-stone-400 border-2 h-16"}></textarea>
 
     </form>
 };

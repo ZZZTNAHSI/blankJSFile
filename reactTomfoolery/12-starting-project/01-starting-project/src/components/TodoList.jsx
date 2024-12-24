@@ -16,7 +16,7 @@ export default function TodoList({id, title, desc, dueDate, tasks, addTask, inde
                 noProj();
             }} className="w-[80px] h-10 hover:text-red-600">Cancel</button>
         </div>
-        <p className="mb-4 text-stone-400">{dueDate}</p>
+        <p className="mb-4 text-stone-400">{new Intl.DateTimeFormat('en-US').format(dueDate)}</p>
         <p className="mb-4 leading-loose border-b-2 pb-4 border-stone-300">{desc}</p>
         <p className="mt-1 text-3xl font-bold">Tasks</p>
         <div className="flex flex-row items-center">
