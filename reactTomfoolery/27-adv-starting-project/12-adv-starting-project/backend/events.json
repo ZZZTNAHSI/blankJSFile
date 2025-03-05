@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"I likieaw sdf","image":"https://asldhfahsdl;fghlasd.asdohfglasdhfglkjhsd.asdofhlsdfghliashdgfl;","date":"2025-03-06","description":"I like mne, sed i do. ","id":"031c9b24-79e2-49af-8bd7-1a70827b279b"},{"title":"I likieaw sdf","image":"https://asldhfahsdl;fghlasd.asdohfglasdhfglkjhsd.asdofhlsdfghliashdgfl;","date":"2025-03-06","description":"I like mne, sed i do. ","id":"ce1ecae8-58b9-4ac2-9d2d-6056a9fcbef6"},{"title":"asdfHerQAW1 aesdf","image":"https://asldhfahsdl;fghlasd.asdohfglasdhfglkjhsd.asdofhlsdfghliashdgfl;","date":"2025-03-01","description":"I like men, yues i do. ","id":"ff470ac7-ab07-4b35-b8be-8cfd3353c5e9"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
