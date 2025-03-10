@@ -6,7 +6,7 @@ export default function NewEvent() {
         event.preventDefault();
 
     }
-    return <EventForm />
+    return <EventForm method={"post"} />
 }
 
 export async function action({request, params}) {
