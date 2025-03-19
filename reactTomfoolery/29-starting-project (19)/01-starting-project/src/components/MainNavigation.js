@@ -1,38 +1,37 @@
-import { NavLink, useRouteError, useRouteLoaderData } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import classes from './EventsNavigation.module.css';
+import classes from './MainNavigation.module.css';
 
-function EventsNavigation() {
-  const token = useRouteLoaderData('root');
+function MainNavigation() {
   return (
     <header className={classes.header}>
       <nav>
-        <ul className={classes.list}>
+        <ul>
           <li>
             <NavLink
-              to="/events"
+              to="/"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
               end
             >
-              All Events
+              Home
             </NavLink>
           </li>
-         {token && <li>
+          <li>
             <NavLink
-              to="/events/new"
+              to="/posts"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
-              New Event
+              Blog
             </NavLink>
-          </li>}
+          </li>
         </ul>
       </nav>
     </header>
   );
 }
 
-export default EventsNavigation;
+export default MainNavigation;
